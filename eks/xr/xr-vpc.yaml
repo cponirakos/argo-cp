@@ -10,3 +10,4 @@ spec:
     matchLabels:
       cloud: aws
       network: vpc
+  id: myvpcid
