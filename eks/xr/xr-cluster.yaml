@@ -1,0 +1,14 @@
+---
+apiVersion: platformref.crossplane.io/v1alpha1
+kind: XK8s
+metadata:
+  name: my-cluster
+spec:
+  compositionRef:
+    name: xeks.k8s.platformref.crossplane.io
+  id: my-eks
+  parameters:
+    nodes:
+      count: 1
+      size: medium
+  cloud: aws
