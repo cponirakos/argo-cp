@@ -11,4 +11,3 @@ spec:
     nodes:
       count: 1
       size: medium
-  cloud: aws
