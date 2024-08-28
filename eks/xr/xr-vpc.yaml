@@ -1,11 +1,11 @@
 ---
-apiVersion: aws.platformref.crossplane.io/v1alpha1
+apiVersion: platformref.crossplane.io/v1alpha1
 kind: XNetwork
 metadata:
   name: my-vpc
 spec:
   compositionRef:
-    name: aws.xnetworks.platformref.crossplane.io
+    name: aws.xnetwork.platformref.crossplane.io
   compositionSelector:
     matchLabels:
       cloud: aws
