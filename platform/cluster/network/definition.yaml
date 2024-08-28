@@ -1,21 +1,51 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xnetworks.aws.platformref.crossplane.io
+  name: xnetworks.platformref.crossplane.io
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  group: aws.platformref.crossplane.io
+  group: platformref.crossplane.io
   names:
     kind: XNetwork
     plural: xnetworks
-  claimNames:
-    kind: Network
-    plural: networks
   versions:
     - name: v1alpha1
       served: true
       referenceable: true
       schema:
-        openAPIV3Schema: {}
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                providerConfig:
+                  type: object
+                  properties:
+                    aws:
+                      type: string
+                      description: Name of the aws providerConfig
+                    azure:
+                      type: string
+                      description: Name of the aws providerConfig
+                    gcp:
+                      type: string
+                      description: Name of the aws providerConfig
+                id:
+                  type: string
+                  description: ID of this Network that other objects will use to refer to it.
+              required:
+                - id
+            status:
+              type: object
+              properties:
+                subnetIds:
+                  type: array
+                  items:
+                    type: string
+                securityGroupIds:
+                  type: array
+                  items:
+                    type: string
