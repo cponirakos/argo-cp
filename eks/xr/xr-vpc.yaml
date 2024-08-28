@@ -5,7 +5,7 @@ metadata:
   name: my-vpc
 spec:
   compositionRef:
-    name: aws.xnetwork.platformref.crossplane.io
+    name: aws.xnetworks.platformref.crossplane.io
   compositionSelector:
     matchLabels:
       cloud: aws
