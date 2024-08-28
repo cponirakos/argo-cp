@@ -1,0 +1,12 @@
+apiVersion: aws.platformref.crossplane.io/v1alpha1
+kind: Network
+metadata:
+  name: my-claimed-vpc
+  namspace: dev
+spec:
+  compositionRef:
+    name: xnetworks.aws.platformref.crossplane.io
+  compositionSelector:
+    matchLabels:
+      provider: aws
+      network: vpc
