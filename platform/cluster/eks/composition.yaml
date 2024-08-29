@@ -34,7 +34,7 @@ spec:
                 role: controlplane
             vpcConfig:
               - endpointPrivateAccess: true
-                endpointPublicAccess: false
+                endpointPublicAccess: true
             #version: "1.23" # With this remarked out or ommitted, the Region default Kubernetes version will be selected
       patches:
         - type: PatchSet
@@ -268,54 +268,54 @@ spec:
                 role: nodegroup
       patches:
         - type: PatchSet
-          patchSetName: providerConfigAws
-### Provider config for provider-helm
-    - name: helm-providerConfig
-      base:
-        apiVersion: helm.crossplane.io/v1beta1
-        kind: ProviderConfig
-        spec:
-          credentials:
-            source: Secret
-            secretRef:
-              key: kubeconfig
-      patches:
-        - fromFieldPath: spec.claim.namespace
-          toFieldPath: spec.credentials.secretRef.namespace
-        - fromFieldPath: metadata.name
-          toFieldPath: spec.credentials.secretRef.name
-          transforms:
-            - type: string
-              string:
-                fmt: "%s-ekscluster"
-        - type: ToCompositeFieldPath
-          fromFieldPath: metadata.name 
-          toFieldPath: status.values.providerConfig.helm
-      readinessChecks:
-        - type: None
-### Install CSI Driver configured with IRSA
-    - name: cluster-csi
-      base:
-        apiVersion: platformref.crossplane.io/v1alpha1
-        kind: XChart
-        spec:
-          compositionSelector:
-            matchLabels:
-              chart: eksEbsCSI
-      patches:
-        - fromFieldPath: spec.providerConfig.aws
-          toFieldPath: spec.providerConfig.aws
-        - fromFieldPath: status.values.providerConfig.helm
-          toFieldPath: spec.providerConfig.helm
-          policy:
-            fromFieldPath: Required
-        - fromFieldPath: spec.claim.namespace
-          toFieldPath: spec.secretNamespace
-        - fromFieldPath: status.values.oidc
-          toFieldPath: spec.values.oidc
-          policy:
-            fromFieldPath: Required
-        - fromFieldPath: status.values.accountID
-          toFieldPath: spec.values.accountID
-          policy:
-            fromFieldPath: Required
+          patchSetName: providerConfigAws        
+# ### Provider config for provider-helm
+#     - name: helm-providerConfig
+#       base:
+#         apiVersion: helm.crossplane.io/v1beta1
+#         kind: ProviderConfig
+#         spec:
+#           credentials:
+#             source: Secret
+#             secretRef:
+#               key: kubeconfig
+#       patches:
+#         - fromFieldPath: spec.claim.namespace
+#           toFieldPath: spec.credentials.secretRef.namespace
+#         - fromFieldPath: metadata.name
+#           toFieldPath: spec.credentials.secretRef.name
+#           transforms:
+#             - type: string
+#               string:
+#                 fmt: "%s-ekscluster"
+#         - type: ToCompositeFieldPath
+#           fromFieldPath: metadata.name 
+#           toFieldPath: status.values.providerConfig.helm
+#       readinessChecks:
+#         - type: None
+# ### Install CSI Driver configured with IRSA
+#     - name: cluster-csi
+#       base:
+#         apiVersion: platformref.crossplane.io/v1alpha1
+#         kind: XChart
+#         spec:
+#           compositionSelector:
+#             matchLabels:
+#               chart: eksEbsCSI
+#       patches:
+#         - fromFieldPath: spec.providerConfig.aws
+#           toFieldPath: spec.providerConfig.aws
+#         - fromFieldPath: status.values.providerConfig.helm
+#           toFieldPath: spec.providerConfig.helm
+#           policy:
+#             fromFieldPath: Required
+#         - fromFieldPath: spec.claim.namespace
+#           toFieldPath: spec.secretNamespace
+#         - fromFieldPath: status.values.oidc
+#           toFieldPath: spec.values.oidc
+#           policy:
+#             fromFieldPath: Required
+#         - fromFieldPath: status.values.accountID
+#           toFieldPath: spec.values.accountID
+#           policy:
+#             fromFieldPath: Required
