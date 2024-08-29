@@ -3,6 +3,8 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-aws-ec2
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-ec2:v1.11.0
 ---
@@ -10,6 +12,8 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-aws-iam
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-iam:v1.11.0
 ---
@@ -17,6 +21,8 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-aws-eks
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-eks:v1.11.0
 ---
@@ -24,6 +30,8 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-helm
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   package: xpkg.upbound.io/crossplane-contrib/provider-helm:v0.19.0
 ---
@@ -31,5 +39,7 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-aws-rds
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-rds:v1.11.0
