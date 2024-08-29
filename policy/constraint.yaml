@@ -10,7 +10,7 @@ spec:
     namespaces:
       - dev
     kinds:
-      - apiGroups: ["aws.platformref.crossplane.io"]
+      - apiGroups: ["platformref.crossplane.io"]
         kinds: ["Cluster"]
   parameters:
     size: small
