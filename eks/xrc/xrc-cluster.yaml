@@ -1,5 +1,5 @@
 apiVersion: platformref.crossplane.io/v1alpha1
-kind: XCluster
+kind: Cluster
 metadata:
   name: eks-dev-1
 spec:
