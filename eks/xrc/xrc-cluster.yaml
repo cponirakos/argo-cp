@@ -2,6 +2,7 @@ apiVersion: platformref.crossplane.io/v1alpha1
 kind: Cluster
 metadata:
   name: eks-dev-1
+  namespace: dev
 spec:
   id: eks-dev-1
   parameters:
