@@ -16,3 +16,4 @@ spec:
   cloud: aws
   writeConnectionSecretToRef:
     name: platform-ref-aws-kubeconfig
+    namespace: upbound-system

@@ -8,6 +8,7 @@ metadata:
   labels:
     cloud: aws
 spec:
+  writeConnectionSecretsToNamespace: upbound-system
   compositeTypeRef:
     apiVersion: platformref.crossplane.io/v1alpha1
     kind: XK8s
@@ -97,6 +98,8 @@ spec:
                 fmt: "%s-ekscluster"
       connectionDetails:
         - fromConnectionSecretKey: kubeconfig
+          name: kubeconfig
+          type: FromConnectionSecretKey
     - name: nodeGroupPublic
       base:
         apiVersion: eks.aws.upbound.io/v1beta1
@@ -280,17 +283,20 @@ spec:
             secretRef:
               key: kubeconfig
       patches:
-        - fromFieldPath: spec.claim.namespace
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          type: FromCompositeFieldPath
+        - fromFieldPath: spec.writeConnectionSecretToRef.namespace
           toFieldPath: spec.credentials.secretRef.namespace
-        - fromFieldPath: metadata.name
+          type: FromCompositeFieldPath
+        - fromFieldPath: metadata.uid
           toFieldPath: spec.credentials.secretRef.name
           transforms:
-            - type: string
-              string:
-                fmt: "%s-ekscluster"
-        - type: ToCompositeFieldPath
-          fromFieldPath: metadata.name 
-          toFieldPath: status.values.providerConfig.helm
+            - string:
+                fmt: '%s-ekscluster'
+                type: Format
+              type: string
+          type: FromCompositeFieldPath
       readinessChecks:
         - type: None
     # #Kubernertes ProviderConfig
