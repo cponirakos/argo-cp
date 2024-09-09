@@ -43,3 +43,12 @@ metadata:
     argocd.argoproj.io/sync-wave: "-2"
 spec:
   package: xpkg.upbound.io/upbound/provider-aws-rds:v1.11.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-kubernetes
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  package: xpkg.upbound.io/crossplane-contrib/provider-kubernetes:v0.14.1
