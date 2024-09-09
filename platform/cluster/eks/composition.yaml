@@ -293,51 +293,51 @@ spec:
           toFieldPath: status.values.providerConfig.helm
       readinessChecks:
         - type: None
-    #Kubernertes ProviderConfig
-    - name: k8s-providerConfig
-      base:
-        apiVersion: kubernetes.crossplane.io/v1alpha1
-        kind: ProviderConfig
-        metadata:
-          name: kubernetes-provider
-        spec:
-          credentials:
-            source: Secret
-            secretRef:
-              key: kubeconfig
-        patches:
-        - fromFieldPath: spec.claim.namespace
-          toFieldPath: spec.credentials.secretRef.namespace
-        - fromFieldPath: metadata.name
-          toFieldPath: spec.credentials.secretRef.name
-          transforms:
-            - type: string
-              string:
-                fmt: "%s-ekscluster"
-        - type: ToCompositeFieldPath
-          fromFieldPath: metadata.name 
-          toFieldPath: status.values.providerConfig.helm
-      readinessChecks:
-        - type: None
-    #Namespace deployment on remote cluster
-    - name: namespace-deployment
-      base:
-        apiVersion: kubernetes.crossplane.io/v1alpha2
-        kind: Object
-        metadata:
-          annotations:
-            uptest.upbound.io/timeout: "60"
-          name: dev-namespace
-        spec:
-          forProvider:
-            manifest:
-              apiVersion: v1
-              kind: Namespace
-              metadata:
-                name: dev
-          providerConfigRef:
-            name: kubernetes-provider
-          references:
-            dependsOn:
-              apiVersion: 
-              name: kubernetesCluster
+    # #Kubernertes ProviderConfig
+    # - name: k8s-providerConfig
+    #   base:
+    #     apiVersion: kubernetes.crossplane.io/v1alpha1
+    #     kind: ProviderConfig
+    #     metadata:
+    #       name: kubernetes-provider
+    #     spec:
+    #       credentials:
+    #         source: Secret
+    #         secretRef:
+    #           key: kubeconfig
+    #     patches:
+    #     - fromFieldPath: spec.claim.namespace
+    #       toFieldPath: spec.credentials.secretRef.namespace
+    #     - fromFieldPath: metadata.name
+    #       toFieldPath: spec.credentials.secretRef.name
+    #       transforms:
+    #         - type: string
+    #           string:
+    #             fmt: "%s-ekscluster"
+    #     - type: ToCompositeFieldPath
+    #       fromFieldPath: metadata.name 
+    #       toFieldPath: status.values.providerConfig.helm
+    #   readinessChecks:
+    #     - type: None
+    # #Namespace deployment on remote cluster
+    # - name: namespace-deployment
+    #   base:
+    #     apiVersion: kubernetes.crossplane.io/v1alpha2
+    #     kind: Object
+    #     metadata:
+    #       annotations:
+    #         uptest.upbound.io/timeout: "60"
+    #       name: dev-namespace
+    #     spec:
+    #       forProvider:
+    #         manifest:
+    #           apiVersion: v1
+    #           kind: Namespace
+    #           metadata:
+    #             name: dev
+    #       providerConfigRef:
+    #         name: kubernetes-provider
+    #       references:
+    #         dependsOn:
+    #           apiVersion: 
+    #           name: kubernetesCluster
