@@ -62,3 +62,16 @@ spec:
           toFieldPath: spec.securityGroupIds
           policy:
             fromFieldPath: Required
+    - name: compositeServices
+      base:
+        apiVersion: platformref.crossplane.io/v1alpha1
+        kind: XServices
+      patches:
+        - fromFieldPath: metadata.labels
+          toFieldPath: metadata.labels
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+        - fromFieldPath: spec.id
+          toFieldPath: spec.providerConfigRef.name
+        - fromFieldPath: spec.parameters.services.operators.prometheus.version
+          toFieldPath: spec.operators.prometheus.version
