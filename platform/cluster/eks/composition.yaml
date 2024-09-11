@@ -88,8 +88,8 @@ spec:
       patches:
         - type: PatchSet
           patchSetName: providerConfigAws
-        - fromFieldPath: spec.claim.namespace
-          toFieldPath: spec.writeConnectionSecretToRef.namespace
+        # - fromFieldPath: spec.claim.namespace
+        #   toFieldPath: spec.writeConnectionSecretToRef.namespace
         - fromFieldPath: metadata.uid
           toFieldPath: spec.writeConnectionSecretToRef.name
           transforms:
