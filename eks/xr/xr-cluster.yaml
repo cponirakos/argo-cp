@@ -7,5 +7,12 @@ spec:
   parameters:
     nodes:
       count: 1
-      size: medium
+      size: small
+    services:
+      operators:
+        prometheus:
+          version: "15.0.1"
   cloud: aws
+  writeConnectionSecretToRef:
+    name: platform-ref-aws-kubeconfig
+    namespace: upbound-system

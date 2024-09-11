@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: eks/xrc
+    path: eks/xr
     repoURL: https://github.com/cponirakos/argo-cp.git
     targetRevision: HEAD
   syncPolicy:
