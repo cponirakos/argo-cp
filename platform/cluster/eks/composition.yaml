@@ -293,11 +293,11 @@ spec:
           type: FromCompositeFieldPath
         - fromFieldPath: metadata.uid
           toFieldPath: spec.credentials.secretRef.name
-          # transforms:
-          #   - string:
-          #       fmt: '%s-ekscluster'
-          #       type: Format
-          #     type: string
+          transforms:
+            - string:
+                fmt: '%s-ekscluster'
+                type: Format
+              type: string
           type: FromCompositeFieldPath
       readinessChecks:
         - type: None
