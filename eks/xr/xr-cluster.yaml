@@ -7,7 +7,7 @@ spec:
   parameters:
     nodes:
       count: 1
-      size: medium
+      size: small
     services:
       operators:
         prometheus:
