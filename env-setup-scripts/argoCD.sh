@@ -10,7 +10,7 @@ kubectl create namespace argocd
 until kubectl get ns argocd -o 'jsonpath={..status.phase}' | grep -m 1 "Active" ; do : ; done
 kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.7/deploy/gatekeeper.yaml
 # Use following line for RC version
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.0-rc4/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 # Use following line for released version
 #kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 echo "Hang tight, waiting for argoCD server to become ready. When you see the port-forward console open, you can access the argoCD UI at https://localhost:8080 with username admin and the password you provided."
@@ -21,3 +21,4 @@ export ARGO_NEW_PW=$(htpasswd -bnB "" $ARGO_ADMIN_PW | tr -d ':\n' | sed 's/$2y/
 kubectl -n argocd patch secret argocd-secret   -p '{"stringData": {"admin.password": "'$ARGO_NEW_PW'","admin.passwordMtime": "'$(date +%FT%T%Z)'"}}'
 unset ARGO_NEW_PW
 unset ARGO_ADMIN_PW
+kubectl patch cm argocd-cm -p '{"data":{"application.resourceTrackingMethod":"annotation"}}' -n argocd
