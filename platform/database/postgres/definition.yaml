@@ -1,0 +1,16 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xpostgresdbs.platformref.crossplane.io
+spec:
+  group: platformref.crossplane.io
+  names:
+    kind: XPostgresDb
+    plural: xpostgresdbs
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema: {}

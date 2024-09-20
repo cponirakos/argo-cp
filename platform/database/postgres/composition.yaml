@@ -1,0 +1,65 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xpostgresdbs.platformref.crossplane.io
+spec:
+  compositeTypeRef:
+    apiVersion: platformref.crossplane.io/v1alpha1
+    kind: XPostgresDb
+  mode: Pipeline
+  pipeline:
+  - functionRef:
+      name: crossplane-contrib-function-patch-and-transform
+    step: patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      kind: Resources
+      patchSets:
+      - name: metadata
+        patches:
+        - fromFieldPath: metadata.annotations
+          toFieldPath: metadata.annotations
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+      resources:
+      - name: postgres
+        base:
+          apiVersion: rds.aws.upbound.io/v1beta2
+          kind: Instance
+          metadata:
+            annotations:
+              meta.upbound.io/example-id: rds/v1beta1/instance
+              uptest.upbound.io/timeout: "3600"
+            name: example--postgres-dbinstance
+          spec:
+            forProvider:
+              allocatedStorage: 20
+              autoGeneratePassword: true
+              autoMinorVersionUpgrade: true
+              backupRetentionPeriod: 14
+              backupWindow: 09:46-10:16
+              dbName: example
+              engine: postgres
+              engineVersion: "16.1"
+              instanceClass: db.t3.micro
+              kmsKeyIdSelector:
+                matchLabels:
+                  testing.upbound.io/example-name: sample-key
+              maintenanceWindow: Mon:00:00-Mon:03:00
+              passwordSecretRef:
+                key: password
+                name: example-dbinstance
+                namespace: upbound-system
+              publiclyAccessible: false
+              region: us-west-2
+              skipFinalSnapshot: true
+              storageEncrypted: true
+              storageType: gp2
+              username: adminuser
+            writeConnectionSecretToRef:
+              name: example-dbinstance-out
+              namespace: default
+        patches:
+          - type: PatchSet
+            patchSetName: metadata
